@@ -1,0 +1,9 @@
+# Исключаем скомпилированные и внешние папки
+dist/
+node_modules/
+build/
+coverage/
+.vscode/
+*.map
+*.min.js
+*.min.css
