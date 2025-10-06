@@ -10,8 +10,46 @@
 
 <body>
     <main class="game">
-        <!-- Здесь будет интерфейс игры -->
+        <section class="game__field">
+            <div class="game__player character-card">
+                <h2 class="character-card__title">Игрок</h2>
+                <div class="character-card__stats">
+                    <p class="character-card__stat">Класс: —</p>
+                    <p class="character-card__stat">Уровень: —</p>
+                    <p class="character-card__stat">Здоровье: —</p>
+                    <p class="character-card__stat">Оружие: —</p>
+                    <p class="character-card__stat">Атрибуты: —</p>
+                    <p class="character-card__stat">Способности: —</p>
+                </div>
+            </div>
+
+            <div class="game__monster character-card">
+                <h2 class="character-card__title">Монстр</h2>
+                <div class="character-card__stats">
+                    <p class="character-card__stat">Тип: —</p>
+                    <p class="character-card__stat">Уровень: —</p>
+                    <p class="character-card__stat">Здоровье: —</p>
+                    <p class="character-card__stat">Оружие: —</p>
+                    <p class="character-card__stat">Атрибуты: —</p>
+                    <p class="character-card__stat">Способности: —</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="game__log">
+            <h3 class="game__log-title">Ход боя</h3>
+            <ul class="game__log-list">
+                <!-- Лог боя будет добавляться сюда -->
+            </ul>
+        </section>
+
+        <section class="game__controls">
+            <button class="game__button" id="start-button">Начать бой</button>
+            <button class="game__button" id="attack-button" disabled>Атаковать</button>
+            <button class="game__button" id="next-button" disabled>Следующий бой</button>
+        </section>
     </main>
+
 
     <script type="module" src="src/js/main.js"></script>
 </body>
