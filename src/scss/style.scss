@@ -1,6 +1,21 @@
 @import 'reset';
 @import '../../node_modules/normalize.css/normalize.css';
 
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+}
+
+.game__field {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
 .character-card {
   background-color: #f4f4f4;
   border: 2px solid #444;
@@ -23,6 +38,65 @@
   &__stat {
     margin: 4px 0;
   }
+}
+
+.game__log {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto 24px;
+  padding: 16px;
+  background-color: #222;
+  color: #0f0;
+  font-family: monospace;
+  border-radius: 6px;
+  border: 1px solid #444;
+  text-align: left;
+
+  &-title {
+    margin-top: 0;
+    font-size: 1.2em;
+    text-align: center;
+  }
+
+  &-list {
+    list-style: none;
+    padding-left: 0;
+
+    li {
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.game__setup {
+  // margin: 16px 12px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9em;
+    font-weight: bold;
+  }
+
+  input,
+  select {
+    margin-top: 4px;
+    padding: 8px;
+    font-size: 1em;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #000;
+  }
+}
+
+.game__setup,
+.game__controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
 }
 
 .game__button {

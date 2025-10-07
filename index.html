@@ -1,58 +1,76 @@
 <!doctype html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Автобаттлер</title>
-    <link rel="stylesheet" href="dist/style.css" />
-  </head>
 
-  <body>
-    <main class="game">
-      <section class="game__field">
-        <div class="game__player character-card">
-          <h2 class="character-card__title">Игрок</h2>
-          <div class="character-card__stats">
-            <p class="character-card__stat">Класс: -</p>
-            <p class="character-card__stat">Уровень: -</p>
-            <p class="character-card__stat">Здоровье: -</p>
-            <p class="character-card__stat">Оружие: -</p>
-            <p class="character-card__stat">Атрибуты: -</p>
-            <p class="character-card__stat">Способности: -</p>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Автобаттлер</title>
+  <link rel="stylesheet" href="dist/style.css" />
+</head>
+
+<body>
+  <main class="game">
+    <section class="game__field">
+      <div class="game__player character-card">
+        <h2 class="character-card__title">Игрок</h2>
+        <div class="character-card__stats">
+          <p class="character-card__stat">Класс: -</p>
+          <p class="character-card__stat">Уровень: -</p>
+          <p class="character-card__stat">Здоровье: -</p>
+          <p class="character-card__stat">Оружие: -</p>
+          <p class="character-card__stat">Атрибуты: -</p>
+          <p class="character-card__stat">Способности: -</p>
         </div>
+      </div>
 
-        <div class="game__monster character-card">
-          <h2 class="character-card__title">Монстр</h2>
-          <div class="character-card__stats">
-            <p class="character-card__stat">Тип: -</p>
-            <p class="character-card__stat">Уровень: -</p>
-            <p class="character-card__stat">Здоровье: -</p>
-            <p class="character-card__stat">Оружие: -</p>
-            <p class="character-card__stat">Атрибуты: -</p>
-            <p class="character-card__stat">Способности: -</p>
-          </div>
+      <div class="game__monster character-card">
+        <h2 class="character-card__title">Монстр</h2>
+        <div class="character-card__stats">
+          <p class="character-card__stat">Тип: -</p>
+          <p class="character-card__stat">Уровень: -</p>
+          <p class="character-card__stat">Здоровье: -</p>
+          <p class="character-card__stat">Оружие: -</p>
+          <p class="character-card__stat">Атрибуты: -</p>
+          <p class="character-card__stat">Способности: -</p>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="game__log">
-        <h3 class="game__log-title">Ход боя</h3>
-        <ul class="game__log-list">
-          <!-- Лог боя будет добавляться сюда -->
-        </ul>
-      </section>
+    <section class="game__log">
+      <h3 class="game__log-title">Ход боя</h3>
+      <ul class="game__log-list">
+        <!-- Лог боя будет добавляться сюда -->
+      </ul>
+    </section>
 
-      <section class="game__controls">
-        <button class="game__button" id="start-button">Начать бой</button>
-        <button class="game__button" id="attack-button" disabled>
-          Атаковать
-        </button>
-        <button class="game__button" id="next-button" disabled>
-          Следующий бой
-        </button>
-      </section>
-    </main>
+    <section class="game__setup">
+      <label class="game__label">
+        Имя персонажа:
+        <input id="name-input" type="text" class="game__input" placeholder="Введите имя" />
+      </label>
 
-    <script type="module" src="src/js/main.js"></script>
-  </body>
+      <label class="game__label">
+        Класс персонажа:
+        <select id="class-select" class="game__select">
+          <option value="Воин">Воин</option>
+          <option value="Варвар">Варвар</option>
+          <option value="Разбойник">Разбойник</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="game__controls">
+      <button class="game__button" id="start-button">Начать бой</button>
+      <button class="game__button" id="attack-button" disabled>
+        Атаковать
+      </button>
+      <button class="game__button" id="next-button" disabled>
+        Следующий бой
+      </button>
+    </section>
+  </main>
+
+  <script type="module" src="src/js/main.js"></script>
+</body>
+
 </html>
