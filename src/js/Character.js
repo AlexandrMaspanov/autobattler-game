@@ -1,25 +1,7 @@
 // src/js/Character.js
 
-const weaponTable = {
-  Меч: { damage: 3, type: 'Рубящий' },
-  Дубина: { damage: 3, type: 'Дробящий' },
-  Кинжал: { damage: 2, type: 'Колющий' },
-  Топор: { damage: 4, type: 'Рубящий' },
-  Копье: { damage: 3, type: 'Колющий' },
-  'Легендарный Меч': { damage: 10, type: 'Рубящий' },
-};
-
-const classHealthPerLevel = {
-  Воин: 5,
-  Варвар: 6,
-  Разбойник: 4,
-};
-
-const classStartingWeapon = {
-  Воин: 'Меч',
-  Варвар: 'Дубина',
-  Разбойник: 'Кинжал',
-};
+import { classHealthPerLevel, classStartingWeapon } from '../data/classes.js';
+import { weaponTable } from '../data/weapons.js';
 
 export class Character {
   constructor(name, chosenClass) {
