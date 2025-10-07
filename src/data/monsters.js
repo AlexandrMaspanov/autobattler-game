@@ -5,7 +5,7 @@ export const monsterTable = {
     strength: 1,
     agility: 1,
     endurance: 1,
-    trait: null,
+    trait: 'Нет',
     reward: 'Кинжал',
   },
   Скелет: {

@@ -39,6 +39,8 @@ export class Game {
   }
 
   getLog() {
-    return this.log;
+    const output = this.log;
+    this.log = []; // очищаем после передачи
+    return output;
   }
 }

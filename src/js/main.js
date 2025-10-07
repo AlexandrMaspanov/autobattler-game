@@ -49,8 +49,12 @@ nextButton.addEventListener('click', () => {
 });
 
 function renderLog() {
-  logContainer.innerHTML = game
-    .getLog()
-    .map((line) => `<p>${line}</p>`)
-    .join('');
+  const logList = document.querySelector('.game__log-list');
+  const newLines = game.getLog();
+  newLines.forEach((line) => {
+    const li = document.createElement('li');
+    li.textContent = line;
+    logList.appendChild(li);
+  });
+  game.log = []; // очищаем лог после вывода
 }
