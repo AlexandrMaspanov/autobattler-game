@@ -17,6 +17,12 @@ export class Monster {
     this.endurance = data.endurance;
     this.trait = data.trait;
     this.reward = data.reward;
+
+    this.attributes = {
+      strength: this.strength,
+      agility: this.agility,
+      endurance: this.endurance,
+    };
   }
 
   getWeaponDamage() {

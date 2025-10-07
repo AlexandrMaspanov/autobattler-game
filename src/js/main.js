@@ -33,7 +33,18 @@ attackButton.addEventListener('click', () => {
   game.getMonster().renderTo('.game__monster');
   renderLog();
 
-  if (status === 'end') {
+  if (game.getCharacter().health <= 0) {
+    attackButton.disabled = true;
+    nextButton.disabled = true;
+    startButton.disabled = false;
+
+    document.querySelector('.game__monster').innerHTML = '';
+
+    const logList = document.querySelector('.game__log-list');
+    const li = document.createElement('li');
+    li.textContent = 'Вы проиграли. Начните заново.';
+    logList.appendChild(li);
+  } else if (status === 'end') {
     attackButton.disabled = true;
     nextButton.disabled = false;
   }

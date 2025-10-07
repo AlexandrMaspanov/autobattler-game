@@ -1,3 +1,5 @@
+// src/js/renderCard.js
+
 export function renderCard(containerSelector, title, stats) {
   const container = document.querySelector(containerSelector);
   container.innerHTML = `
