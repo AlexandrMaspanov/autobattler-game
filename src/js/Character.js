@@ -2,6 +2,7 @@
 
 import { classHealthPerLevel, classStartingWeapon } from '../data/classes.js';
 import { weaponTable } from '../data/weapons.js';
+import { renderCard } from './renderCard.js';
 
 export class Character {
   constructor(name, chosenClass) {
@@ -89,27 +90,16 @@ export class Character {
   }
 
   renderTo(selector) {
-    const container = document.querySelector(selector);
     const bonuses = this.getActiveBonuses();
-
-    container.innerHTML = `
-      <h2 class="character-card__title">${this.name}</h2>
-      <div class="character-card__stats">
-        <p class="character-card__stat">Уровень: ${this.level}</p>
-        <p class="character-card__stat">Классы: ${this.levels
-          .map((e) => `${e.class} ${e.level}`)
-          .join(', ')}</p>
-        <p class="character-card__stat">Здоровье: ${this.health}</p>
-        <p class="character-card__stat">Оружие: ${
-          this.weapon
-        } (${this.getWeaponType()}, урон ${this.getWeaponDamage()})</p>
-        <p class="character-card__stat">
-          Атрибуты: Сила ${this.attributes.strength}, Ловкость ${
-      this.attributes.agility
-    }, Выносливость ${this.attributes.endurance}
-        </p>
-        <p class="character-card__stat">Бонусы: ${bonuses.join(', ') || '—'}</p>
-      </div>
-    `;
+    const stats = [
+      `Уровень: ${this.level}`,
+      `Классы: ${this.levels.map((e) => `${e.class} ${e.level}`).join(', ')}`,
+      `Здоровье: ${this.health}`,
+      `Оружие: ${this.weapon}
+        (${this.getWeaponType()}, урон ${this.getWeaponDamage()})`,
+      `Атрибуты: Сила ${this.attributes.strength}, Ловкость ${this.attributes.agility}, Выносливость ${this.attributes.endurance}`,
+      `Бонусы: ${bonuses.join(', ') || '—'}`,
+    ];
+    renderCard(selector, this.name, stats);
   }
 }

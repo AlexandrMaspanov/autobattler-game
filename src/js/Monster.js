@@ -2,6 +2,7 @@
 
 import { monsterTable } from '../data/monsters.js';
 import { weaponTable } from '../data/weapons.js';
+import { renderCard } from './renderCard.js';
 
 export class Monster {
   constructor(name) {
@@ -28,19 +29,13 @@ export class Monster {
   }
 
   renderTo(selector) {
-    const container = document.querySelector(selector);
-    container.innerHTML = `
-  <h2 class="character-card__title">${this.name}</h2>
-  <div class="character-card__stats">
-    <p class="character-card__stat">Здоровье: ${this.health}</p>
-    <p class="character-card__stat">Оружие: ${
-      this.weapon
-    } (${this.getWeaponType()}, урон ${this.getWeaponDamage()})</p>
-    <p class="character-card__stat">Сила: ${this.strength}, Ловкость: ${
-      this.agility
-    }, Выносливость: ${this.endurance}</p>
-    <p class="character-card__stat">Особенность: ${this.trait}</p>
-  </div>
-`;
+    const stats = [
+      `Здоровье: ${this.health}`,
+      `Оружие: ${this.weapon}
+        (${this.getWeaponType()}, урон ${this.getWeaponDamage()})`,
+      `Атрибуты: Сила ${this.strength}, Ловкость ${this.agility}, Выносливость ${this.endurance}`,
+      `Особенность: ${this.trait}`,
+    ];
+    renderCard(selector, this.name, stats);
   }
 }
