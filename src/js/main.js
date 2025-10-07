@@ -1,35 +1,56 @@
 // src/js/main.js
 
-import { Character } from './Character.js';
-import { Monster } from './Monster.js';
-import { Battle } from './Battle.js';
+import { Game } from './Game.js';
 
 const startButton = document.getElementById('start-button');
 const attackButton = document.getElementById('attack-button');
 const nextButton = document.getElementById('next-button');
+const logContainer = document.querySelector('.game__log');
 
-let player;
-let monster;
-let battle;
+const nameInput = document.getElementById('name-input');
+const classSelect = document.getElementById('class-select');
+
+let game;
 
 startButton.addEventListener('click', () => {
-  player = new Character('Игрок');
-  monster = new Monster('Монстр');
-  battle = new Battle(player, monster);
+  const name = nameInput.value || 'Игрок';
+  const className = classSelect.value || 'Воин';
 
-  player.renderTo('.game__player');
-  monster.renderTo('.game__monster');
+  game = new Game(name, className);
+  game.startNewBattle();
+
+  game.getCharacter().renderTo('.game__player');
+  game.getMonster().renderTo('.game__monster');
+  renderLog();
 
   attackButton.disabled = false;
   startButton.disabled = true;
 });
 
 attackButton.addEventListener('click', () => {
-  battle.attack();
+  const status = game.nextTurn();
+  game.getCharacter().renderTo('.game__player');
+  game.getMonster().renderTo('.game__monster');
+  renderLog();
+
+  if (status === 'end') {
+    attackButton.disabled = true;
+    nextButton.disabled = false;
+  }
 });
 
 nextButton.addEventListener('click', () => {
-  monster = new Monster('Монстр');
-  battle = new Battle(player, monster);
-  monster.renderTo('.game__monster');
+  game.startNewBattle();
+  game.getMonster().renderTo('.game__monster');
+  renderLog();
+
+  attackButton.disabled = false;
+  nextButton.disabled = true;
 });
+
+function renderLog() {
+  logContainer.innerHTML = game
+    .getLog()
+    .map((line) => `<p>${line}</p>`)
+    .join('');
+}
