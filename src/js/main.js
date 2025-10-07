@@ -13,6 +13,37 @@ const classSelect = document.getElementById('class-select');
 let game;
 
 startButton.addEventListener('click', () => {
+  // 🔄 Очистка перед новым боем
+  document.querySelector('.game__log-list').innerHTML = '';
+
+  document.querySelector('.game__player').innerHTML = `
+    <h2 class="character-card__title">Игрок</h2>
+    <div class="character-card__stats">
+      <p class="character-card__stat">Класс: -</p>
+      <p class="character-card__stat">Уровень: -</p>
+      <p class="character-card__stat">Здоровье: -</p>
+      <p class="character-card__stat">Оружие: -</p>
+      <p class="character-card__stat">Атрибуты: -</p>
+      <p class="character-card__stat">Способности: -</p>
+    </div>
+  `;
+
+  document.querySelector('.game__monster').innerHTML = `
+    <h2 class="character-card__title">Монстр</h2>
+    <div class="character-card__stats">
+      <p class="character-card__stat">Тип: -</p>
+      <p class="character-card__stat">Уровень: -</p>
+      <p class="character-card__stat">Здоровье: -</p>
+      <p class="character-card__stat">Оружие: -</p>
+      <p class="character-card__stat">Атрибуты: -</p>
+      <p class="character-card__stat">Способности: -</p>
+    </div>
+  `;
+
+  attackButton.disabled = true;
+  nextButton.disabled = true;
+
+  // 🆕 Запуск нового боя
   const name = nameInput.value || 'Игрок';
   const className = classSelect.value || 'Воин';
 
@@ -38,7 +69,9 @@ attackButton.addEventListener('click', () => {
     nextButton.disabled = true;
     startButton.disabled = false;
 
-    document.querySelector('.game__monster').innerHTML = '';
+    document
+      .querySelector('.game__monster')
+      .classList.add('character-card--inactive');
 
     const logList = document.querySelector('.game__log-list');
     const li = document.createElement('li');
