@@ -7,12 +7,22 @@ const attackButton = document.getElementById('attack-button');
 const nextButton = document.getElementById('next-button');
 const logContainer = document.querySelector('.game__log');
 
+const setupSection = document.querySelector('.game__setup');
+
+const levelupSection = document.querySelector('.game__levelup');
+const levelupSelect = document.getElementById('levelup-select');
+const levelupButton = document.getElementById('levelup-button');
+
 const nameInput = document.getElementById('name-input');
 const classSelect = document.getElementById('class-select');
 
 let game;
 
 startButton.addEventListener('click', () => {
+  // Скрытие форм выбора класса персонажа
+  setupSection.classList.add('game__setup--hidden');
+  levelupSection.classList.add('game__levelup--hidden');
+
   // Очистка классов визуального дизейбла
   document
     .querySelector('.game__monster')
@@ -74,6 +84,12 @@ attackButton.addEventListener('click', () => {
     nextButton.disabled = true;
     startButton.disabled = false;
 
+    game = null;
+    setupSection.classList.remove('game__setup--hidden');
+    levelupSection.classList.add('game__levelup--hidden');
+
+    classSelect.selectedIndex = 0;
+
     document
       .querySelector('.game__monster')
       .classList.add('character-card--inactive');
@@ -83,6 +99,13 @@ attackButton.addEventListener('click', () => {
     li.textContent = 'Вы проиграли. Начните заново.';
     logList.appendChild(li);
   } else if (status === 'end') {
+    if (game.getCharacter().level < 3) {
+      levelupSection.classList.remove('game__levelup--hidden');
+    } else {
+      levelupSection.classList.add('game__levelup--hidden');
+      game.getCharacter().health = game.getCharacter().calculateMaxHealth();
+      game.getCharacter().renderTo('.game__player');
+    }
     attackButton.disabled = true;
     nextButton.disabled = false;
   }
@@ -90,11 +113,24 @@ attackButton.addEventListener('click', () => {
 
 nextButton.addEventListener('click', () => {
   game.startNewBattle();
+
+  game.getCharacter().health = game.getCharacter().calculateMaxHealth();
+  game.getCharacter().renderTo('.game__player');
+
   game.getMonster().renderTo('.game__monster');
   renderLog();
 
   attackButton.disabled = false;
   nextButton.disabled = true;
+});
+
+levelupButton.addEventListener('click', () => {
+  const chosenClass = levelupSelect.value;
+  game.getCharacter().addLevel(chosenClass);
+  game.getCharacter().health = game.getCharacter().calculateMaxHealth();
+  game.getCharacter().renderTo('.game__player');
+
+  levelupSection.classList.add('game__levelup--hidden');
 });
 
 function renderLog() {

@@ -19,6 +19,7 @@ export class Game {
     const monsterName = this.monsterNames[randomIndex];
     this.monster = new Monster(monsterName);
     this.battle = new Battle(this.character, this.monster);
+    this.character.health = this.character.calculateMaxHealth();
     this.log = [`Бой начинается: ${this.character.name} против ${monsterName}`];
   }
 
