@@ -13,7 +13,12 @@ const classSelect = document.getElementById('class-select');
 let game;
 
 startButton.addEventListener('click', () => {
-  // 🔄 Очистка перед новым боем
+  // Очистка классов визуального дизейбла
+  document
+    .querySelector('.game__monster')
+    .classList.remove('character-card--inactive');
+
+  // Очистка перед новым боем
   document.querySelector('.game__log-list').innerHTML = '';
 
   document.querySelector('.game__player').innerHTML = `
@@ -43,7 +48,7 @@ startButton.addEventListener('click', () => {
   attackButton.disabled = true;
   nextButton.disabled = true;
 
-  // 🆕 Запуск нового боя
+  // Запуск нового боя
   const name = nameInput.value || 'Игрок';
   const className = classSelect.value || 'Воин';
 
