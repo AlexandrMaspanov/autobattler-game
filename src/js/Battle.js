@@ -174,6 +174,9 @@ export class Battle {
 
     if (defender.health <= 0) {
       this.log.push(`${defender.name} побеждён`);
+      if (isCharacter) {
+        attacker.victories += 1;
+      }
       return 'end';
     }
 
