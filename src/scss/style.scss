@@ -6,6 +6,7 @@
     flex-direction: column;
     align-items: center;
     padding: 24px;
+    gap: 16px;
 }
 
 .game__field {
@@ -48,7 +49,10 @@
 .game__log {
     max-width: 600px;
     width: 100%;
-    margin: 0 auto 24px;
+    max-height: 120px;
+    overflow-y: auto;
+    flex-shrink: 0;
+    margin: 24px auto;
     padding: 16px;
     background-color: #222;
     color: #0f0;

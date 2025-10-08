@@ -107,7 +107,16 @@ attackButton.addEventListener('click', () => {
       game.getCharacter().renderTo('.game__player');
     }
     attackButton.disabled = true;
-    nextButton.disabled = false;
+    nextButton.disabled = true;
+
+    if (game.getCharacter().level < 3) {
+      levelupSection.classList.remove('game__levelup--hidden');
+    } else {
+      levelupSection.classList.add('game__levelup--hidden');
+      game.getCharacter().health = game.getCharacter().calculateMaxHealth();
+      game.getCharacter().renderTo('.game__player');
+      nextButton.disabled = false;
+    }
   }
 });
 
@@ -131,6 +140,7 @@ levelupButton.addEventListener('click', () => {
   game.getCharacter().renderTo('.game__player');
 
   levelupSection.classList.add('game__levelup--hidden');
+  nextButton.disabled = false;
 });
 
 function renderLog() {
@@ -142,4 +152,5 @@ function renderLog() {
     logList.appendChild(li);
   });
   game.log = []; // очищаем лог после вывода
+  logContainer.scrollTop = logContainer.scrollHeight;
 }
