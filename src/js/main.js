@@ -16,12 +16,16 @@ const levelupButton = document.getElementById('levelup-button');
 const nameInput = document.getElementById('name-input');
 const classSelect = document.getElementById('class-select');
 
+const restartSection = document.querySelector('.game__restart');
+const restartButton = document.getElementById('restart-button');
+
 let game;
 
 startButton.addEventListener('click', () => {
   // Скрытие форм выбора класса персонажа
   setupSection.classList.add('game__setup--hidden');
   levelupSection.classList.add('game__levelup--hidden');
+  restartSection.classList.add('game__restart--hidden');
 
   // Очистка классов визуального дизейбла
   document
@@ -31,29 +35,7 @@ startButton.addEventListener('click', () => {
   // Очистка перед новым боем
   document.querySelector('.game__log-list').innerHTML = '';
 
-  document.querySelector('.game__player').innerHTML = `
-    <h2 class="character-card__title">Игрок</h2>
-    <div class="character-card__stats">
-      <p class="character-card__stat">Класс: -</p>
-      <p class="character-card__stat">Уровень: -</p>
-      <p class="character-card__stat">Здоровье: -</p>
-      <p class="character-card__stat">Оружие: -</p>
-      <p class="character-card__stat">Атрибуты: -</p>
-      <p class="character-card__stat">Способности: -</p>
-    </div>
-  `;
-
-  document.querySelector('.game__monster').innerHTML = `
-    <h2 class="character-card__title">Монстр</h2>
-    <div class="character-card__stats">
-      <p class="character-card__stat">Тип: -</p>
-      <p class="character-card__stat">Уровень: -</p>
-      <p class="character-card__stat">Здоровье: -</p>
-      <p class="character-card__stat">Оружие: -</p>
-      <p class="character-card__stat">Атрибуты: -</p>
-      <p class="character-card__stat">Способности: -</p>
-    </div>
-  `;
+  resetCharacterCards();
 
   attackButton.disabled = true;
   nextButton.disabled = true;
@@ -63,6 +45,7 @@ startButton.addEventListener('click', () => {
   const className = classSelect.value || 'Воин';
 
   game = new Game(name, className);
+  game.getCharacter().victories = 0;
   game.startNewBattle();
 
   game.getCharacter().renderTo('.game__player');
@@ -82,7 +65,7 @@ attackButton.addEventListener('click', () => {
   if (game.getCharacter().health <= 0) {
     attackButton.disabled = true;
     nextButton.disabled = true;
-    startButton.disabled = false;
+    startButton.disabled = true;
 
     game = null;
     setupSection.classList.remove('game__setup--hidden');
@@ -98,25 +81,58 @@ attackButton.addEventListener('click', () => {
     const li = document.createElement('li');
     li.textContent = 'Вы проиграли. Начните заново.';
     logList.appendChild(li);
-  } else if (status === 'end') {
-    if (game.getCharacter().level < 3) {
-      levelupSection.classList.remove('game__levelup--hidden');
-    } else {
-      levelupSection.classList.add('game__levelup--hidden');
-      game.getCharacter().health = game.getCharacter().calculateMaxHealth();
-      game.getCharacter().renderTo('.game__player');
-    }
-    attackButton.disabled = true;
-    nextButton.disabled = true;
 
-    if (game.getCharacter().level < 3) {
+    setupSection.classList.add('game__setup--hidden');
+    levelupSection.classList.add('game__levelup--hidden');
+    restartSection.classList.remove('game__restart--hidden');
+  } else if (status === 'end') {
+    const character = game.getCharacter();
+
+    if (character.victories >= 5) {
+      const logList = document.querySelector('.game__log-list');
+      const li = document.createElement('li');
+      li.textContent = 'Поздравляем! Вы победили 5 монстров и прошли игру.';
+      logList.appendChild(li);
+
+      setupSection.classList.add('game__setup--hidden');
+      levelupSection.classList.add('game__levelup--hidden');
+      restartSection.classList.remove('game__restart--hidden');
+
+      // Сброс игры
+      game = null;
+
+      // Показываем форму создания персонажа
+      setupSection.classList.remove('game__setup--hidden');
+      levelupSection.classList.add('game__levelup--hidden');
+
+      // Сброс селектов
+      classSelect.selectedIndex = 0;
+      nameInput.value = '';
+
+      // Обновляем карточки
+      resetCharacterCards();
+
+      // Блокируем кнопки
+      startButton.disabled = false;
+      attackButton.disabled = true;
+      nextButton.disabled = true;
+
+      restartSection.classList.remove('game__restart--hidden');
+
+      return;
+    }
+
+    if (character.level < 3) {
       levelupSection.classList.remove('game__levelup--hidden');
     } else {
       levelupSection.classList.add('game__levelup--hidden');
-      game.getCharacter().health = game.getCharacter().calculateMaxHealth();
-      game.getCharacter().renderTo('.game__player');
+      character.health = character.calculateMaxHealth();
+      character.renderTo('.game__player');
       nextButton.disabled = false;
     }
+
+    attackButton.disabled = true;
+    nextButton.disabled = true;
   }
 });
 
@@ -142,6 +158,47 @@ levelupButton.addEventListener('click', () => {
   levelupSection.classList.add('game__levelup--hidden');
   nextButton.disabled = false;
 });
+
+restartButton.addEventListener('click', () => {
+  setupSection.classList.remove('game__setup--hidden');
+  levelupSection.classList.add('game__levelup--hidden');
+  restartSection.classList.add('game__restart--hidden');
+
+  document.querySelector('.game__log-list').innerHTML = '';
+  classSelect.selectedIndex = 0;
+  nameInput.value = '';
+  resetCharacterCards();
+
+  startButton.disabled = false;
+  attackButton.disabled = true;
+  nextButton.disabled = true;
+});
+
+function resetCharacterCards() {
+  document.querySelector('.game__player').innerHTML = `
+    <h2 class="character-card__title">Игрок</h2>
+    <div class="character-card__stats">
+      <p class="character-card__stat">Класс: -</p>
+      <p class="character-card__stat">Уровень: -</p>
+      <p class="character-card__stat">Здоровье: -</p>
+      <p class="character-card__stat">Оружие: -</p>
+      <p class="character-card__stat">Атрибуты: -</p>
+      <p class="character-card__stat">Способности: -</p>
+    </div>
+  `;
+
+  document.querySelector('.game__monster').innerHTML = `
+    <h2 class="character-card__title">Монстр</h2>
+    <div class="character-card__stats">
+      <p class="character-card__stat">Тип: -</p>
+      <p class="character-card__stat">Уровень: -</p>
+      <p class="character-card__stat">Здоровье: -</p>
+      <p class="character-card__stat">Оружие: -</p>
+      <p class="character-card__stat">Атрибуты: -</p>
+      <p class="character-card__stat">Способности: -</p>
+    </div>
+  `;
+}
 
 function renderLog() {
   const logList = document.querySelector('.game__log-list');
