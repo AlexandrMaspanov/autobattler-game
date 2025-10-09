@@ -37,8 +37,11 @@ export class Monster {
   renderTo(selector) {
     const stats = [
       `Здоровье: ${this.health}`,
-      `Оружие: ${this.weapon}
-        (${this.getWeaponType()}, урон ${this.getWeaponDamage()})`,
+      `Оружие: ${
+        this.weapon
+      } (${this.getWeaponType()}, урон ${this.getWeaponDamage()} = ${
+        weaponTable[this.weapon].damage
+      } + ${this.attributes.strength} от силы ${this.name})`,
       `Атрибуты: Сила ${this.strength}, Ловкость ${this.agility}, Выносливость ${this.endurance}`,
       `Особенность: ${this.trait}`,
     ];

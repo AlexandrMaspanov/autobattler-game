@@ -1,6 +1,7 @@
 // src/js/main.js
 
 import { Game } from './Game.js';
+import { weaponTable } from '../data/weapons.js';
 
 const startButton = document.getElementById('start-button');
 const attackButton = document.getElementById('attack-button');
@@ -12,6 +13,11 @@ const setupSection = document.querySelector('.game__setup');
 const levelupSection = document.querySelector('.game__levelup');
 const levelupSelect = document.getElementById('levelup-select');
 const levelupButton = document.getElementById('levelup-button');
+
+const weaponSection = document.querySelector('.game__weapon');
+const weaponButton = document.getElementById('weapon-button');
+const currentWeaponText = document.getElementById('current-weapon');
+const monsterWeaponText = document.getElementById('monster-weapon');
 
 const nameInput = document.getElementById('name-input');
 const classSelect = document.getElementById('class-select');
@@ -87,6 +93,27 @@ attackButton.addEventListener('click', () => {
     restartSection.classList.remove('game__restart--hidden');
   } else if (status === 'end') {
     const character = game.getCharacter();
+    const monster = game.getMonster();
+
+    const strengthBonus = character.attributes.strength || 0;
+
+    // Текущее оружие
+    const currentWeapon = character.weapon;
+    const currentType = character.getWeaponType();
+    const currentBase = weaponTable[currentWeapon]?.damage || 0;
+    const currentTotal = currentBase + strengthBonus;
+
+    currentWeaponText.textContent = `${currentWeapon} (${currentType}, урон ${currentTotal} = ${currentBase} + ${strengthBonus} от силы ${character.name})`;
+
+    // Оружие монстра
+    const monsterWeapon = monster.weapon;
+    const monsterType = monster.getWeaponType();
+    const monsterBase = weaponTable[monsterWeapon]?.damage || 0;
+    const monsterTotal = monsterBase + strengthBonus;
+
+    monsterWeaponText.textContent = `${monsterWeapon} (${monsterType}, урон ${monsterTotal} = ${monsterBase} + ${strengthBonus} от силы ${character.name})`;
+
+    weaponSection.classList.remove('game__weapon--hidden');
 
     if (character.victories >= 5) {
       const logList = document.querySelector('.game__log-list');
@@ -145,6 +172,7 @@ nextButton.addEventListener('click', () => {
   game.getMonster().renderTo('.game__monster');
   renderLog();
 
+  weaponSection.classList.add('game__weapon--hidden');
   attackButton.disabled = false;
   nextButton.disabled = true;
 });
@@ -156,7 +184,18 @@ levelupButton.addEventListener('click', () => {
   game.getCharacter().renderTo('.game__player');
 
   levelupSection.classList.add('game__levelup--hidden');
+  weaponSection.classList.add('game__weapon--hidden');
   nextButton.disabled = false;
+});
+
+weaponButton.addEventListener('click', () => {
+  const character = game.getCharacter();
+  const monsterWeapon = game.getMonster().weapon;
+
+  character.weapon = monsterWeapon;
+  character.renderTo('.game__player');
+
+  weaponSection.classList.add('game__weapon--hidden');
 });
 
 restartButton.addEventListener('click', () => {

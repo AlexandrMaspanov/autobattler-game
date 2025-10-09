@@ -96,8 +96,11 @@ export class Character {
       `Классы: ${this.levels.map((e) => `${e.class} ${e.level}`).join(', ')}`,
       `Здоровье: ${this.health}`,
       `Победы: ${this.victories}`,
-      `Оружие: ${this.weapon}
-        (${this.getWeaponType()}, урон ${this.getWeaponDamage()})`,
+      `Оружие: ${
+        this.weapon
+      } (${this.getWeaponType()}, урон ${this.getWeaponDamage()} = ${
+        weaponTable[this.weapon].damage
+      } + ${this.attributes.strength} от силы ${this.name})`,
       `Атрибуты: Сила ${this.attributes.strength}, Ловкость ${this.attributes.agility}, Выносливость ${this.attributes.endurance}`,
       `Бонусы: ${bonuses.join(', ') || '—'}`,
     ];
